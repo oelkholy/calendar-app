@@ -100,6 +100,11 @@ export class EditEventPopupComponent implements OnInit {
     }
   }
 
+  onDelete() {
+    this.calendarService.deleteEvent(this.data.id);
+    this.dialogRef.close();
+  }
+
   onCancel(): void {
     this.dialogRef.close();
   }
