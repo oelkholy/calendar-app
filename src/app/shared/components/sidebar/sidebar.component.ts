@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   DestroyRef,
   OnInit,
@@ -28,14 +29,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements AfterViewInit {
   // Services
   calendarService = inject(CalendarService);
   private destroyRef = inject(DestroyRef);
 
   @ViewChild('calendar', { static: false }) calendar: MatCalendar<Date>;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.subscribeToDateChange();
   }
 
