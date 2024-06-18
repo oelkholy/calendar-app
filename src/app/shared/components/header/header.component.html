@@ -24,7 +24,7 @@
       <button class="me-20" (click)="setNextDate()" mat-button>
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
-      <span>{{ date | date }}</span>
+      <span>{{ calendarService.selectedDate$ | async | date }}</span>
     </div>
     <span class="example-spacer"></span>
     <button class="bordered-button" mat-button [matMenuTriggerFor]="menu">

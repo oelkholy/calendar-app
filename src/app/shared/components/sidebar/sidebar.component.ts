@@ -1,18 +1,54 @@
-import { Component, model } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
+import { CalendarService } from '../../../core/services/calendar.service';
+import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatButtonModule, MatIconModule, MatCardModule, MatDatepickerModule],
+  imports: [
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatDatepickerModule,
+    AsyncPipe,
+  ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
-  selected = model<Date | null>(null);
+export class SidebarComponent implements OnInit {
+  // Services
+  calendarService = inject(CalendarService);
+  private destroyRef = inject(DestroyRef);
+
+  @ViewChild('calendar', { static: false }) calendar: MatCalendar<Date>;
+
+  ngOnInit(): void {
+    this.subscribeToDateChange();
+  }
+
+  subscribeToDateChange() {
+    this.calendarService.selectedDate$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((date) => {
+        this.goToDate(date);
+      });
+  }
+
+  // Switch calendar view to show the month related to the selected date
+  goToDate(date: Date) {
+    this.calendar._goToDateInView(date, 'month');
+  }
 }

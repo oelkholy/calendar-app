@@ -4,6 +4,11 @@
     Create
   </button>
   <mat-card class="demo-inline-calendar-card">
-    <mat-calendar [(selected)]="selected"></mat-calendar>
+    <mat-calendar
+      #calendar
+      [selected]="calendarService.selectedDate$ | async"
+      (selectedChange)="calendarService.setDate($event)"
+      [startAt]="calendarService.selectedDate$ | async"
+    ></mat-calendar>
   </mat-card>
 </aside>
