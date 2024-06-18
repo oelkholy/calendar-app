@@ -1,0 +1,16 @@
+// 1. Configuration and helpers (abstract)
+@import "abstracts/variables";
+// 2. base
+@import "base/base";
+
+// 3. Components
+
+// 4. Layout
+@import "layouts/main_layout";
+
+// 5. Pages
+
+// 6. utilites
+@import "utilities/fontSize", "utilities/fontWeight", "utilities/margin",
+  "utilities/padding", "utilities/raduis", "utilities/colors",
+  "utilities/functions", "utilities/animations.scss", "utilities/shadows";

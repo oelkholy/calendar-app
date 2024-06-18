@@ -1,0 +1,37 @@
+$font-size-base: 16;
+
+/*margins*/
+@mixin margins {
+  @for $i from 0 through 100 {
+    @if $i % 2 == 0 {  
+      .me-#{$i} {
+        margin-inline-end: #{calc($i / $font-size-base)}rem !important;
+      }
+      .ms-#{$i} {
+        margin-inline-start:  #{calc($i / $font-size-base)}rem !important;
+      }
+  
+      .mb-#{$i} {
+        margin-bottom: #{calc($i / $font-size-base)}rem !important;
+      }
+      .mt-#{$i} {
+        margin-top: #{calc($i / $font-size-base)}rem !important;
+      }
+  
+      .mx-#{$i} {
+        margin-left: #{calc($i / $font-size-base)}rem !important;
+        margin-right: #{calc($i / $font-size-base)}rem !important;
+      }
+  
+      .my-#{$i} {
+        margin-top: #{calc($i / $font-size-base)}rem !important;
+        margin-bottom: #{calc($i / $font-size-base)}rem !important;
+      }
+      .m-#{$i} {
+        margin: #{calc($i / $font-size-base)}rem !important;
+      }
+    }
+  }
+}
+
+@include margins;

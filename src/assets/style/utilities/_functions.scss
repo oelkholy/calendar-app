@@ -1,0 +1,17 @@
+@use "sass:math";
+
+$html-font-size: 16px;
+
+// Function to strip the unit from a value
+@function strip-unit($value) {
+  @if type-of($value) == 'number' and not unitless($value) {
+    @return math.div($value, ($value * 0 + 1));
+  }
+  @warn "Expected a number with a unit";
+  @return $value;
+}
+
+// Function to convert px to rem
+@function px-to-rem($pxValue) {
+  @return math.div(strip-unit($pxValue), strip-unit($html-font-size)) * 1rem;
+}

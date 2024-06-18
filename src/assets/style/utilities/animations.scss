@@ -1,0 +1,25 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+%rotation-animation {
+  animation: rotate 0.9s infinite linear;
+}
+
+@keyframes rotate180 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+%rotation180-animation {
+  animation: rotate180 0.9s linear;
+}

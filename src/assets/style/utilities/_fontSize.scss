@@ -1,0 +1,13 @@
+$font-size-base: 16;
+
+/*fontSizes*/
+@mixin fontSizes {
+  @for $i from 0 through 100 {
+    @if $i % 2 == 0 {  
+      .fs-#{$i} {
+        font-size: #{calc($i / $font-size-base)}rem !important;
+      }
+    }
+  }
+}
+@include fontSizes;

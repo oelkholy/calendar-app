@@ -1,0 +1,11 @@
+$fontWeights:400,
+500,
+600,
+700,
+800,
+900;
+@each $var in $fontWeights {
+  .fw-#{$var} {
+    font-weight: #{$var}!important;
+  }
+}
