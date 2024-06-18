@@ -13,18 +13,26 @@
       <span class="time"> {{ time.title }} </span>
       }
     </div>
-    <div class="events">
+    @if (events.length) {
+    <div #eventElement class="events">
       @for (event of events; track $index) {
       <div
+        cdkDrag
+        cdkDragLockAxis="y"
+        (cdkDragEnded)="onDrop('event' + event.id)"
+        [cdkDragBoundary]="eventElement"
+        (cdkDragStarted)="onDragStarted()"
         [style.top]="calculateMarginTop(event.startTime)"
         [style.height]="calculateHeight(event.startTime, event.endTime)"
         [style.left]="calculateMarginLeft(event)"
         class="event"
-        (click)="onClickEvent(event)"
+        [id]="'event' + event.id"
+        (click)="onClickEvent(event, 'event' + event.id)"
       >
         {{ event.title }}
       </div>
       }
     </div>
+    }
   </div>
 </div>
