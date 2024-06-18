@@ -2,12 +2,14 @@
   <div class="header">
     <app-header></app-header>
   </div>
-  <div class="layout">
-    <div class="sidebar">
-      <app-sidebar></app-sidebar>
-    </div>
-    <div class="content">
-      <router-outlet></router-outlet>
-    </div>
+  <div class="content">
+    <mat-drawer-container class="example-container" style="min-height: 100vh">
+      <mat-drawer mode="side" opened><app-sidebar></app-sidebar></mat-drawer>
+      <mat-drawer-content>
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+      </mat-drawer-content>
+    </mat-drawer-container>
   </div>
 </div>

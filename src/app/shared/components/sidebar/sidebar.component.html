@@ -1,1 +1,9 @@
-<p>sidebar works!</p>
+<aside class="sidebar p-20">
+  <button class="mb-20" mat-fab extended>
+    <mat-icon>add</mat-icon>
+    Create
+  </button>
+  <mat-card class="demo-inline-calendar-card">
+    <mat-calendar [(selected)]="selected"></mat-calendar>
+  </mat-card>
+</aside>

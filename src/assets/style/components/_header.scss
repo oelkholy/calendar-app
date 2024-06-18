@@ -1,6 +1,12 @@
 .main-layout {
   .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
     border-bottom: 1px solid #ccc;
+    background-color: #fff;
 
     .mat-toolbar {
       background-color: transparent;

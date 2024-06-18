@@ -1,0 +1,10 @@
+.main-layout {
+  .sidebar {
+    min-height: 100vh;
+    overflow: hidden !important;
+    background-color: #fff;
+  }
+  .mat-mdc-card {
+    box-shadow: none;
+  }
+}
