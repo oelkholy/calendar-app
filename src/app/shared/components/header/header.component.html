@@ -1,1 +1,40 @@
-<p>header works!</p>
+<div class="header">
+  <mat-toolbar>
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="me-50">Calendar</span>
+    <button
+      (click)="setTodaysDate()"
+      class="bordered-button me-20"
+      mat-button
+      extended
+    >
+      Today
+    </button>
+    <div class="date">
+      <button (click)="setPrevDate()" mat-button>
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <button class="me-20" (click)="setNextDate()" mat-button>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      <span>{{ date | date }}</span>
+    </div>
+    <span class="example-spacer"></span>
+    <button class="bordered-button" mat-button [matMenuTriggerFor]="menu">
+      Menu
+      <mat-icon>arrow_drop_down</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Day</button>
+      <button mat-menu-item>Week</button>
+      <button mat-menu-item>Month</button>
+      <button mat-menu-item>Year</button>
+    </mat-menu>
+  </mat-toolbar>
+</div>

@@ -1,0 +1,23 @@
+.main-layout {
+  .header {
+    border-bottom: 1px solid #ccc;
+
+    .mat-toolbar {
+      background-color: transparent;
+    }
+    .example-spacer {
+      flex: 1 1 auto;
+    }
+    .date .mat-mdc-button {
+      min-width: unset;
+      width: 42px;
+      .mat-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
