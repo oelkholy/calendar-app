@@ -14,6 +14,7 @@ import { MatCalendar, MatDatepickerModule } from '@angular/material/datepicker';
 import { CalendarService } from '../../../core/services/calendar.service';
 import { AsyncPipe } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CalendarEvent } from '../../../core/models/calendar-event.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -51,5 +52,17 @@ export class SidebarComponent implements AfterViewInit {
   // Switch calendar view to show the month related to the selected date
   goToDate(date: Date) {
     this.calendar._goToDateInView(date, 'month');
+  }
+
+  onAddEvent() {
+    this.calendarService
+      .openAddEventDialog()
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result: CalendarEvent) => {
+        if (result) {
+          this.calendarService.addEvent(result);
+        }
+      });
   }
 }
