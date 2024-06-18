@@ -1,1 +1,29 @@
-<p>calendar works!</p>
+<div class="calendar">
+  <div class="date">
+    <span class="month">{{
+      calendarService.selectedDate$ | async | date : "EEE"
+    }}</span>
+    <div class="day">
+      {{ calendarService.selectedDate$ | async | date : "dd" }}
+    </div>
+  </div>
+  <div class="scheduler">
+    <div class="column">
+      @for (time of timeSlots; track $index) {
+      <span class="time"> {{ time }} </span>
+      }
+    </div>
+    <div class="events">
+      @for (event of events; track $index) {
+      <div
+        [style.top]="calculateMarginTop(event.startTime)"
+        [style.height]="calculateHeight(event.startTime, event.endTime)"
+        [style.left]="calculateMarginLeft(event)"
+        class="event"
+      >
+        {{ event.title }}
+      </div>
+      }
+    </div>
+  </div>
+</div>

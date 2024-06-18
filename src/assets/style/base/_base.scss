@@ -1,3 +1,9 @@
+/* Remove Body Scrolling
+==============================*/
+body {
+  overflow: hidden;
+}
+
 /* Handle Scroll style
 ==============================*/
 ::-webkit-scrollbar {
