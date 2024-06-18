@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
 import { CalendarEvent } from '../../../core/models/calendar-event.model';
 import { timelots } from '../../../core/consts/timeslots';
 import { CalendarService } from '../../../core/services/calendar.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Timeslot } from '../../../core/models/timeslot.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-calendar',
@@ -19,6 +20,7 @@ export class CalendarComponent implements OnInit {
 
   // Services
   calendarService = inject(CalendarService);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {}
 
@@ -61,5 +63,17 @@ export class CalendarComponent implements OnInit {
 
   calculateHeight(startTime: number, endTime: number) {
     return `calc((${endTime} - ${startTime}) * 40px)`;
+  }
+
+  onClickEvent(event: CalendarEvent) {
+    this.calendarService
+      .openEditEventDialog(event)
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((updatedEvent: CalendarEvent | undefined) => {
+        if (updatedEvent) {
+          this.calendarService.editEvent(updatedEvent);
+        }
+      });
   }
 }

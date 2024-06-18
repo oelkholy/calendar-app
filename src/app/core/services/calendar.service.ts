@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AddEventPopupComponent } from '../../shared/components/add-event-popup/add-event-popup.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CalendarEvent } from '../models/calendar-event.model';
+import { EditEventPopupComponent } from '../../shared/components/edit-event-popup/edit-event-popup.component';
 
 @Injectable({
   providedIn: 'root',
@@ -36,5 +37,31 @@ export class CalendarService {
     event.id = this.events.length + 1;
     this.events.push(event);
     this.eventsSubject.next(this.events);
+  }
+
+  openEditEventDialog(event: CalendarEvent) {
+    const dialogRef = this.dialog.open(EditEventPopupComponent, {
+      width: '400px',
+      data: event,
+    });
+
+    return dialogRef;
+  }
+
+  editEvent(event: CalendarEvent) {
+    const index = this.events.findIndex((e) => e.id === event.id);
+
+    if (index !== -1) {
+      this.events[index] = event;
+      this.eventsSubject.next(this.events.slice());
+    }
+  }
+
+  deleteEvent(id: number) {
+    const index = this.events.findIndex((e) => e.id === id);
+    if (index !== -1) {
+      this.events.splice(index, 1);
+      this.eventsSubject.next(this.events.slice());
+    }
   }
 }

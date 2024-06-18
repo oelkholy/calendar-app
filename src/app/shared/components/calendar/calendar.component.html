@@ -20,6 +20,7 @@
         [style.height]="calculateHeight(event.startTime, event.endTime)"
         [style.left]="calculateMarginLeft(event)"
         class="event"
+        (click)="onClickEvent(event)"
       >
         {{ event.title }}
       </div>

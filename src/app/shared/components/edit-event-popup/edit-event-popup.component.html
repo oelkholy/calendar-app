@@ -1,0 +1,55 @@
+<div class="p-20">
+  <div
+    style="display: flex; align-items: center; justify-content: space-between"
+  >
+    <h2 mat-dialog-title>
+      Edit Event
+      <span class="fs-16"> ({{ data.date | date }}) </span>
+    </h2>
+    <button
+      mat-icon-button
+      aria-label="Example icon button with a vertical three dot icon"
+    >
+      <mat-icon style="color: red">delete</mat-icon>
+    </button>
+  </div>
+  <form [formGroup]="eventForm" (ngSubmit)="onSave()">
+    <div mat-dialog-content>
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="title"
+          placeholder="Event Title"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start Time</mat-label>
+        <mat-select formControlName="startTime" required>
+          @for (timeSlot of timeslots; track $index) {
+          <mat-option [value]="timeSlot.value">{{ timeSlot.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>End Time</mat-label>
+        <mat-select formControlName="endTime" required>
+          @for (timeSlot of filteredEndTimes; track $index) {
+
+          <mat-option [value]="timeSlot.value">{{ timeSlot.title }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-flat-button type="button" (click)="onCancel()">Cancel</button>
+      <button
+        style="background-color: #6200ee; color: #fff"
+        mat-flat-button
+        type="submit"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
