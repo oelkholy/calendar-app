@@ -27,7 +27,7 @@
         [style.left]="calculateMarginLeft(event)"
         class="event"
         [id]="'event' + event.id"
-        (click)="onClickEvent(event, 'event' + event.id)"
+        (mouseup)="onClickEvent(event, 'event' + event.id)"
       >
         {{ event.title }}
       </div>

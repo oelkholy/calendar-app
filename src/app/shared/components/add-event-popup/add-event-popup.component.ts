@@ -80,7 +80,9 @@ export class AddEventPopupComponent implements OnInit {
   }
 
   getTimeFromValue(value: number): string {
-    const timeSlot = this.timeslots.find((slot: any) => slot.value === value);
+    const timeSlot = this.timeslots.find(
+      (slot: Timeslot) => slot.value === value
+    );
     return timeSlot ? timeSlot.title : '';
   }
 

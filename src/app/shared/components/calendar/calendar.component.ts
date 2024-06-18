@@ -1,16 +1,11 @@
-import { Component, DestroyRef, Input, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, Input, inject } from '@angular/core';
 import { CalendarEvent } from '../../../core/models/calendar-event.model';
 import { timelots } from '../../../core/consts/timeslots';
 import { CalendarService } from '../../../core/services/calendar.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Timeslot } from '../../../core/models/timeslot.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import {
-  CdkDropList,
-  CdkDrag,
-  CdkDropListGroup,
-  CdkDragEnd,
-} from '@angular/cdk/drag-drop';
+import { CdkDropList, CdkDrag, CdkDropListGroup } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-calendar',
@@ -19,7 +14,7 @@ import {
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.scss',
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent {
   timeSlots: Timeslot[] = timelots;
   isDragging: boolean;
 
@@ -28,8 +23,6 @@ export class CalendarComponent implements OnInit {
   // Services
   calendarService = inject(CalendarService);
   private destroyRef = inject(DestroyRef);
-
-  ngOnInit(): void {}
 
   calculateMarginTop(value: number) {
     return `calc((${value} * 40px))`;
@@ -76,24 +69,31 @@ export class CalendarComponent implements OnInit {
     if (this.isDragging) {
       return;
     }
+
     const { translateY, top } = this.extractValues(
-      document.getElementById(eventId)?.getAttribute('style')!
+      document.getElementById(eventId)?.getAttribute('style') || ''
     );
-    event = translateY
-      ? {
-          ...event,
-          startTime: translateY + top,
-          endTime: translateY + top + (event.endTime - event.startTime),
-        }
-      : event;
+
+    const updatedEvent: CalendarEvent = {
+      ...event,
+      startTime: (translateY?.valueOf() || 0) + top,
+      endTime:
+        (translateY?.valueOf() || 0) + top + (event.endTime - event.startTime),
+    };
+
     this.calendarService
-      .openEditEventDialog(event)
+      .openEditEventDialog(updatedEvent)
       .afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((updatedEvent: CalendarEvent | undefined) => {
-        if (updatedEvent) {
-          document.getElementById(eventId)!.style.transform = 'translateY(0)';
-          this.calendarService.editEvent(updatedEvent);
+      .subscribe((editedEvent: CalendarEvent | undefined) => {
+        if (editedEvent) {
+          const eventElement = document.getElementById(eventId);
+          if (eventElement) {
+            eventElement.style.transform = 'translateY(0)';
+            this.calendarService.editEvent(editedEvent);
+          } else {
+            console.error('Failed to find event element with ID:', eventId);
+          }
         }
       });
   }
@@ -137,7 +137,7 @@ export class CalendarComponent implements OnInit {
       this.isDragging = false;
     }, 0);
     const { translateY } = this.extractValues(
-      document.getElementById(eventId)?.getAttribute('style')!
+      document.getElementById(eventId)?.getAttribute('style') || ''
     );
     document.getElementById(eventId)!.style.transform = ` translateY(${
       translateY * 40

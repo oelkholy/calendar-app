@@ -2,7 +2,6 @@ import {
   AfterViewInit,
   Component,
   DestroyRef,
-  OnInit,
   ViewChild,
   inject,
 } from '@angular/core';
