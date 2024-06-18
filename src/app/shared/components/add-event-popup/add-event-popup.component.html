@@ -26,7 +26,7 @@
       <mat-form-field>
         <mat-label>End Time</mat-label>
         <mat-select formControlName="endTime" required>
-          @for (timeSlot of timeslots; track $index) {
+          @for (timeSlot of filteredEndTimes; track $index) {
 
           <mat-option [value]="timeSlot.value">{{ timeSlot.title }}</mat-option>
           }

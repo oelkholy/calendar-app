@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -18,6 +18,8 @@ import { timelots } from '../../../core/consts/timeslots';
 import { CalendarService } from '../../../core/services/calendar.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Timeslot } from '../../../core/models/timeslot.model';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { startWith } from 'rxjs';
 
 @Component({
   selector: 'app-add-event-popup',
@@ -40,19 +42,41 @@ import { Timeslot } from '../../../core/models/timeslot.model';
 export class AddEventPopupComponent implements OnInit {
   eventForm: FormGroup;
   timeslots: Timeslot[] = timelots;
+  filteredEndTimes: Timeslot[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddEventPopupComponent>,
-    public calendarService: CalendarService
+    public calendarService: CalendarService,
+    private destroyRef: DestroyRef
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
+    this.filterTimeTo();
+  }
+
+  initForm() {
     this.eventForm = this.formBuilder.group({
       title: ['', Validators.required],
       startTime: [null, Validators.required],
       endTime: [null, Validators.required],
     });
+  }
+
+  filterTimeTo() {
+    this.eventForm
+      .get('startTime')
+      ?.valueChanges.pipe(
+        takeUntilDestroyed(this.destroyRef),
+        startWith(this.eventForm.get('startTime')?.value)
+      )
+      .subscribe((startTime) => {
+        this.eventForm.get('endTime')?.reset();
+        this.filteredEndTimes = this.timeslots.filter(
+          (timeSlot) => timeSlot.value > startTime
+        );
+      });
   }
 
   getTimeFromValue(value: number): string {
