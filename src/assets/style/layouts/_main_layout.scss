@@ -1,5 +1,9 @@
 .main-layout {
-    .layout-content {
-        min-height: 50vh;
-    }
+  margin-top: 64px;
+  .mat-drawer-inner-container {
+    overflow: hidden;
+    left: 0;
+    width: 260px;
+    z-index: 99;
+  }
 }

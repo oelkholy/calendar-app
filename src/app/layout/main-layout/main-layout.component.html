@@ -4,7 +4,9 @@
   </div>
   <div class="content">
     <mat-drawer-container class="example-container" style="min-height: 100vh">
-      <mat-drawer mode="side" opened><app-sidebar></app-sidebar></mat-drawer>
+      <mat-drawer mode="side" [opened]="drawerService.drawerOpen$ | async"
+        ><app-sidebar></app-sidebar
+      ></mat-drawer>
       <mat-drawer-content>
         <main>
           <router-outlet></router-outlet>

@@ -4,8 +4,7 @@
 @import "base/base";
 
 // 3. Components
-@import "components/header", "components/buttons", "components/sidebar",
-  "components/main-layout";
+@import "components/header", "components/buttons", "components/sidebar";
 
 // 4. Layout
 @import "layouts/main_layout";

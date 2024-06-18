@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
+import { DrawerService } from '../../../core/services/drawer.service';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,9 @@ import { MatMenuModule } from '@angular/material/menu';
 })
 export class HeaderComponent {
   date = new Date();
+
+  // Services
+  drawerService = inject(DrawerService);
 
   setTodaysDate() {
     this.date = new Date();

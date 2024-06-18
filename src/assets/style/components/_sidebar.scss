@@ -1,8 +1,13 @@
 .main-layout {
+  .mat-drawer {
+    overflow: hidden;
+  }
   .sidebar {
     min-height: 100vh;
     overflow: hidden !important;
     background-color: #fff;
+    position: fixed;
+    width: 200px;
   }
   .mat-mdc-card {
     box-shadow: none;
